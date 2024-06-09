@@ -1,23 +1,22 @@
 from tkinter import *
 
-
-
 class CrosswordGame:
     def __init__(self, canvas, size=5):
         self.canvas = canvas
         self.size = size
         self.cells = {}
+        self.entries = []  # List to keep track of the Entry widgets
         self.create_grid()
         self.create_ui()
 
     def create_grid(self):
-        # Assuming correct_data.index_data is a list of lists containing row and column indices
         index_data = [[0, 1], [1, 0], [1, 1], [1, 2], [2, 1], [3, 1], [4, 1], [4, 2], [4, 3]]
 
         for i, (row, col) in enumerate(index_data):
             entry = Entry(self.canvas, width=2, font=('Arial', 18), justify='center')
             entry.grid(row=row, column=col, padx=0, pady=0)
             self.cells[(row, col)] = entry
+            self.entries.append(entry)
 
     def create_ui(self):
         submit_button = Button(self.canvas, text='Submit', command=self.submit_button)
@@ -25,7 +24,7 @@ class CrosswordGame:
         clear_button = Button(self.canvas, text='Clear', command=self.clear_button)
         clear_button.grid(row=6, column=3, columnspan=2, pady=10)
 
-    def submit_button(self):
+    def submit_button(self, event=None):
         correct_data = ["t", "c", "a", "t", "b", "l", "e", "y", "e"]
         index_data = [[0, 1], [1, 0], [1, 1], [1, 2], [2, 1], [3, 1], [4, 1], [4, 2], [4, 3]]
 
@@ -42,6 +41,29 @@ class CrosswordGame:
             cell.delete(0, END)
             cell.config(bg='white')
 
+    def move_cursor(self, row_delta, col_delta):
+        current_widget = self.canvas.focus_get()
+        if current_widget in self.entries:
+            current_index = self.entries.index(current_widget)
+            current_row, current_col = list(self.cells.keys())[current_index]
+
+            new_row = current_row + row_delta
+            new_col = current_col + col_delta
+
+            if (new_row, new_col) in self.cells:
+                self.cells[(new_row, new_col)].focus_set()
+
+    def cursor_up(self, event):
+        self.move_cursor(-1, 0)
+
+    def cursor_down(self, event):
+        self.move_cursor(1, 0)
+
+    def cursor_left(self, event):
+        self.move_cursor(0, -1)
+
+    def cursor_right(self, event):
+        self.move_cursor(0, 1)
 
 if __name__ == "__main__":
     window = Tk()
@@ -56,13 +78,16 @@ if __name__ == "__main__":
     canvas = Canvas(window, width=500, height=500, bg='#80daeb')
     canvas.pack(padx=0, pady=0)  # Pack the canvas into the window with padding set to 0
 
-    explanation_labal = Label(window,text="Босоо:\n"
-                                          "1.table\n"
-                                          "Хэвтээ:\n"
-                                          "1.cat\n"
-                                          "2.eye")
-    explanation_labal.pack()
+    explanation_label = Label(window, text="Босоо:\n1. table\nХэвтээ:\n1. cat\n2. eye")
+    explanation_label.pack()
 
     game = CrosswordGame(canvas)
+
+    # Bind the Enter key to the submit_button method
+    window.bind('<Return>', game.submit_button)
+    window.bind('<Up>', game.cursor_up)
+    window.bind('<Down>', game.cursor_down)
+    window.bind('<Left>', game.cursor_left)
+    window.bind('<Right>', game.cursor_right)
 
     window.mainloop()
