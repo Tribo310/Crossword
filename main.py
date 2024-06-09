@@ -1,6 +1,7 @@
 from tkinter import *
 
 
+
 class CrosswordGame:
     def __init__(self, canvas, size=5):
         self.canvas = canvas
@@ -25,7 +26,7 @@ class CrosswordGame:
         clear_button.grid(row=6, column=3, columnspan=2, pady=10)
 
     def submit_button(self):
-        correct_data = ["t", "c", "a", "t", "b", "l", "e", "g", "e"]
+        correct_data = ["t", "c", "a", "t", "b", "l", "e", "y", "e"]
         index_data = [[0, 1], [1, 0], [1, 1], [1, 2], [2, 1], [3, 1], [4, 1], [4, 2], [4, 3]]
 
         for i, (row, col) in enumerate(index_data):
@@ -49,11 +50,18 @@ if __name__ == "__main__":
     window.title("Crossword Game")  # Set the title of the main window
 
     # Create the title label with a background color and allow it to expand horizontally
-    title_label = Label(window, text="Crossword Game", bg='white', width=100)
+    title_label = Label(window, text="Crossword Game", bg='white')
     title_label.pack(padx=0, pady=0)  # Pack the label into the window with padding set to 0
 
     canvas = Canvas(window, width=500, height=500, bg='#80daeb')
     canvas.pack(padx=0, pady=0)  # Pack the canvas into the window with padding set to 0
+
+    explanation_labal = Label(window,text="Босоо:\n"
+                                          "1.table\n"
+                                          "Хэвтээ:\n"
+                                          "1.cat\n"
+                                          "2.eye")
+    explanation_labal.pack()
 
     game = CrosswordGame(canvas)
 
