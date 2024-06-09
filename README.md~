@@ -1,0 +1,15 @@
+"<-------------Ажлуулах команд------------------->"
+1. 'pip install tk' хийж татах
+    Татсан эсэх ээ шалгаж болно: Доор байгаа кодыг ажлуулж болно
+    "import tkinter
+        tkinter._test()"
+
+2."Run command: python app.py "
+
+
+"<-------------Git hub------------------->"
+1.git init
+2.git status
+git add -A
+3.git commit -m "commit message"
+4. git push origin
