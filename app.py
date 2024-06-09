@@ -12,7 +12,7 @@ if __name__ == "__main__":
     title_label = Label(window, text="Crossword Game", bg='white', font=45)
     title_label.pack(padx=0, pady=0, fill=BOTH)  # Pack the label into the window with padding set to 0
 
-    canvas = Canvas(window, bg='#fff')
+    canvas = Canvas(window, bg='#80daeb')
     canvas.pack(padx=0, pady=0, fill=BOTH)  # Pack the canvas into the window with padding set to 0
 
     explanation_label = Label(window, text="Босоо:\n1. table\nХэвтээ:\n1. cat\n2. eye", font=100)
