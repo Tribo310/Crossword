@@ -1,4 +1,6 @@
 from tkinter import *
+from tkinter import messagebox
+
 class CrosswordGame:
     def __init__(self, canvas, crossword_data):
         self.canvas = canvas
@@ -13,11 +15,23 @@ class CrosswordGame:
     def create_grid(self):
         vcmd = (self.canvas.register(self.validate_input), '%P', '%W')
 
+        # Create Entry widgets for the crossword grid
         for i, (row, col) in enumerate(self.index_data):
             entry = Entry(self.canvas, width=2, font=('Arial', 18), justify='center', validate='key', validatecommand=vcmd)
             entry.grid(row=row, column=col, padx=0, pady=0)
             self.cells[(row, col)] = entry
             self.entries.append(entry)
+
+        # Add clue number labels to the grid
+        clues = {
+            (0, 4): "1.", (3, 7): "2.", (3, 10): "3.",
+            (4, 0): "1.", (6, 6): "2.", (8, 1): "3."
+        }
+
+        for (row, col), text in clues.items():
+            if text:
+                label = Label(self.canvas, text=text, font=('Arial', 12))
+                label.grid(row=row, column=col, padx=0, pady=0)
 
     def validate_input(self, P, widget_name):
         if len(P) <= 1:
@@ -41,6 +55,8 @@ class CrosswordGame:
         clear_button.grid(row=max_row + 1, column=3, columnspan=2, pady=10)
 
     def submit_button(self, event=None):
+        all_correct = True  # Flag to check if all entries are correct
+
         for i, (row, col) in enumerate(self.index_data):
             entry = self.cells[(row, col)]
             user_input = entry.get().lower()
@@ -48,6 +64,10 @@ class CrosswordGame:
                 entry.config(bg='green')
             else:
                 entry.config(bg='red')
+                all_correct = False
+
+        if all_correct:
+            messagebox.showinfo("Congratulations", "All entries are correct!")
 
     def clear_button(self):
         for cell in self.cells.values():
@@ -80,3 +100,16 @@ class CrosswordGame:
 
     def cursor_move(self, event):
         self.move_cursor(0, -1)
+
+
+class App:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Second Window")
+        self.master.geometry("400x300")
+        label = Label(self.master, text="This is the second window")
+        label.pack(pady=20)
+
+def open_second_window():
+    new_window = Toplevel()
+    app = App(new_window)

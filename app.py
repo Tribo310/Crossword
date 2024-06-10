@@ -1,6 +1,7 @@
 from tkinter import *
-from back_end import CrosswordGame
+from back_end import *
 from crossword_data import *
+from tkinter import messagebox
 
 if __name__ == "__main__":
     crossword_data1 = [
@@ -43,5 +44,9 @@ if __name__ == "__main__":
     window.bind('<Left>', game.cursor_left)
     window.bind('<Right>', game.cursor_right)
     window.bind('<BackSpace>', game.cursor_move)
+
+    # Button to open the second window
+    second_window_button = Button(window, text="Open Second Window", command=open_second_window)
+    second_window_button.pack(pady=20)
 
     window.mainloop()
