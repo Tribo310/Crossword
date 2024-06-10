@@ -8,8 +8,16 @@
 
 
 "<-------------Git hub------------------->"
-1.git init
-2.git status
-git add -A
-3.git commit -m "commit message"
-4. git push origin
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Tribo310/desktop-tutorial.git
+git push -u origin main
+
+"<-------------Git hub Push------------------->"
+
+…or push an existing repository from the command line
+git remote add origin https://github.com/Tribo310/desktop-tutorial.git
+git branch -M main
+git push -u origin main

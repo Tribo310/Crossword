@@ -1,20 +1,19 @@
 from tkinter import *
-
 class CrosswordGame:
-    def __init__(self, canvas, size=5):
+    def __init__(self, canvas, crossword_data):
         self.canvas = canvas
-        self.size = size
+        self.correct_data = crossword_data[0]
+        self.index_data = crossword_data[1]
+        self.explanation_data = crossword_data[2]
         self.cells = {}
         self.entries = []  # List to keep track of the Entry widgets
         self.create_grid()
         self.create_ui()
 
     def create_grid(self):
-        index_data = [[0, 1], [1, 0], [1, 1], [1, 2], [2, 1], [3, 1], [4, 1], [4, 2], [4, 3]]
-
         vcmd = (self.canvas.register(self.validate_input), '%P', '%W')
 
-        for i, (row, col) in enumerate(index_data):
+        for i, (row, col) in enumerate(self.index_data):
             entry = Entry(self.canvas, width=2, font=('Arial', 18), justify='center', validate='key', validatecommand=vcmd)
             entry.grid(row=row, column=col, padx=0, pady=0)
             self.cells[(row, col)] = entry
@@ -35,19 +34,17 @@ class CrosswordGame:
                 self.entries[current_index + 1].focus_set()
 
     def create_ui(self):
+        max_row = max(row for row, col in self.index_data)
         submit_button = Button(self.canvas, text='Submit', command=self.submit_button)
-        submit_button.grid(row=6, column=1, columnspan=2, pady=10)
+        submit_button.grid(row=max_row + 1, column=1, columnspan=2, pady=10)
         clear_button = Button(self.canvas, text='Clear', command=self.clear_button)
-        clear_button.grid(row=6, column=3, columnspan=2, pady=10)
+        clear_button.grid(row=max_row + 1, column=3, columnspan=2, pady=10)
 
     def submit_button(self, event=None):
-        correct_data = ["t", "c", "a", "t", "b", "l", "e", "y", "e"]
-        index_data = [[0, 1], [1, 0], [1, 1], [1, 2], [2, 1], [3, 1], [4, 1], [4, 2], [4, 3]]
-
-        for i, (row, col) in enumerate(index_data):
+        for i, (row, col) in enumerate(self.index_data):
             entry = self.cells[(row, col)]
             user_input = entry.get().lower()
-            if user_input == correct_data[i]:
+            if user_input == self.correct_data[i]:
                 entry.config(bg='green')
             else:
                 entry.config(bg='red')
@@ -80,3 +77,6 @@ class CrosswordGame:
 
     def cursor_right(self, event):
         self.move_cursor(0, 1)
+
+    def cursor_move(self, event):
+        self.move_cursor(0, -1)
