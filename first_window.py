@@ -1,8 +1,8 @@
 from tkinter import *
-# from app import app
+from app import app 
 
 def next_window():
-    second_window = Tk()
+    app = Tk()
     first_window.destroy()
 
 first_window = Tk()

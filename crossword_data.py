@@ -18,3 +18,12 @@ crossword_data2= [
      [8,2], [8,3], [8,4], [8,5], [8,6], [8,7], [8,10]
     ]
 ]
+level1_data = [
+        ["t", "c", "a", "t", "b", "l", "e", "y", "e"],
+    [[0, 1],
+     [1, 0], [1, 1], [1, 2],
+     [2, 1],
+     [3, 1],
+     [4, 1], [4, 2], [4, 3]],
+         "Across:\n6. Look at an unknown variable and decide what to do \n8. Refining and improving your code \n11. Repeating sections of code or functions \nDown: \n1. A mini-code or computer program with directions \n2. Lines of instruction for the computer \n3. What the computer does \n4. Putting Information in a computer \n5. Step by step, ordered directions \n7. Finding and fixing a mistake in code \n9. Something that is unknown \n10. Mistake in code"
+    ]
