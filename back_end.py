@@ -1,5 +1,10 @@
+
 from tkinter import *
 from tkinter import messagebox
+from PIL import Image, ImageTk
+import time
+import tkinter as tk
+from tkinter import ttk
 
 class CrosswordGame:
     def __init__(self, canvas, crossword_data):
@@ -11,6 +16,8 @@ class CrosswordGame:
         self.entries = []  # List to keep track of the Entry widgets
         self.create_grid()
         self.create_ui()
+        
+
 
     def create_grid(self):
         vcmd = (self.canvas.register(self.validate_input), '%P', '%W')
@@ -23,16 +30,53 @@ class CrosswordGame:
             self.entries.append(entry)
 
         # Add clue number labels to the grid
-        clues = {
-            (0, 4): "1.", (3, 7): "2.", (3, 10): "3.",
-            (4, 0): "1.", (6, 6): "2.", (8, 1): "3."
-        }
+        clues1 = {
+        (1, 9): "1.", (5, 4): "2.", (7, 6): "3.",
+        (7, 14): "4.", (8, 4): "5.", (8, 11): "6.",
+        (10, 2): "7.", (9, 6): "8.", (12, 7): "9.",
+        (15, 7): "10.", (17, 8): "11."
+    }
 
-        for (row, col), text in clues.items():
+       
+
+        for (row, col), text in clues1.items():
             if text:
                 label = Label(self.canvas, text=text, font=('Arial', 12))
                 label.grid(row=row, column=col, padx=0, pady=0)
 
+
+        # Add clue number labels to the grid
+        clues2 = {
+        (2, 15): "1.", (3, 7): "2.", (4, 13): "3.",
+        (5, 9): "4.", (5, 11): "5.", (7, 0): "6.",
+        (6, 4): "7.", (10, 7): "8.", (11, 6): "9.",
+        (11, 9): "10.", (14, 2): "11."
+    }
+
+       
+
+        for (row, col), text in clues2.items():
+            if text:
+                label = Label(self.canvas, text=text, font=('Arial', 12))
+                label.grid(row=row, column=col, padx=0, pady=0)
+    
+        # Add clue number labels to the grid
+        clues3 = {
+        (0, 5): "1.", (3, 11): "2.", (5, 0): "3.",
+        (4, 13): "4.", (4, 20): "5.", (5, 15): "6.",
+        (6, 3): "7.", (6, 7): "8.", (7, 10): "9.",
+        (6, 18): "10.", (8, 9): "11.", (11, 4): "12.",
+        (13, 0): "13.", (13, 10): "14.", (18, 5): "15."
+    }
+
+       
+
+        for (row, col), text in clues3.items():
+            if text:
+                label = Label(self.canvas, text=text, font=('Arial', 12))
+                label.grid(row=row, column=col, padx=0, pady=0)
+
+    
     def validate_input(self, P, widget_name):
         if len(P) <= 1:
             if len(P) == 1:
@@ -105,11 +149,48 @@ class CrosswordGame:
 class App:
     def __init__(self, master):
         self.master = master
-        self.master.title("Second Window")
+        self.master.title("Crossword Game")
         self.master.geometry("400x300")
-        label = Label(self.master, text="This is the second window")
+        label = Label(self.master, text="Welcome to the Crossword Game!")
         label.pack(pady=20)
+        button_frame = Frame(self.master)
+        button_frame.pack(pady=20)
 
-def open_second_window():
-    new_window = Toplevel()
-    app = App(new_window)
+        for i in range(1, 4):
+            Button(button_frame, text=f"Start Level {i}", command=lambda i=i: self.start_game(i)).pack(side=LEFT, padx=10)
+
+def start_game(self, level):
+        level_data = {
+            1: (level1_data, clues1),
+            2: (level2_data, clues2),
+            3: (level3_data, clues3),
+        }
+        
+        if level not in level_data:
+            messagebox.showerror("Error", "Level not available")
+            return
+        
+        crossword_data, clues = level_data[level]
+        
+        game_window = Toplevel(self.master)
+        game_window.geometry("900x900")
+        game_window.title(f"Level {level}")
+        
+        game = CrosswordGame(game_window, crossword_data, clues)
+        
+        game_window.bind('<Return>', game.submit_button)
+        game_window.bind('<Up>', game.cursor_up)
+        game_window.bind('<Down>', game.cursor_down)
+        game_window.bind('<Left>', game.cursor_left)
+        game_window.bind('<Right>', game.cursor_right)
+        game_window.bind('<BackSpace>', game.cursor_move)
+        
+        game_window.mainloop()
+
+def main():
+    root = Tk()
+    app = App(root)
+    root.mainloop()
+
+if __name__ == "_main_":
+    main() 
